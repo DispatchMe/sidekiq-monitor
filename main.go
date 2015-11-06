@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -51,6 +52,11 @@ func getStats() (*SidekiqStats, error) {
 func main() {
 	pager.ServiceKey = os.Getenv("PAGERDUTY_KEY")
 
+	threshold := os.Getenv("THRESHOLD")
+	thresholdInt, err := strconv.ParseInt(threshold, 10, 64)
+	if err != nil {
+		log.Fatal(err)
+	}
 	log.Println("Starting monitoring loop")
 	for {
 		stats, err := getStats()
@@ -58,7 +64,7 @@ func main() {
 			log.Println(err)
 		} else {
 			log.Printf("%d messages enqueued\n", stats.Sidekiq.Enqueued)
-			if stats.Sidekiq.Enqueued > 500 {
+			if stats.Sidekiq.Enqueued > int(thresholdInt) {
 				pager.Trigger("Sidekiq queue backed up")
 			}
 		}
