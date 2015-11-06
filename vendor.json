@@ -1,0 +1,13 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"canonical": "github.com/stvp/pager",
+			"comment": "",
+			"local": "vendor/github.com/stvp/pager",
+			"revision": "87066cd5b36941268f76bee7ad6b5d9bd09a84eb",
+			"revisionTime": "2015-01-30T19:46:37-08:00"
+		}
+	]
+}
