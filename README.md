@@ -2,8 +2,7 @@ Trigger a PagerDuty incident if the number of `enqueued` messages in a Sidekiq s
 
 ## Usage
 ```bash
-$ HTTP_USERNAME="<basic-auth-username>" \
-  HTTP_PASSWORD="<basic-auth-password>" \
+$ SIDEKIQ_URL="<url with basic auth>" \
   THRESHOLD="<number of messages in queue for alert>" \
   PAGERDUTY_KEY="<pagerduty api key>" \
   ./sidekiq-monitor

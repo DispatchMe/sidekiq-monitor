@@ -33,9 +33,8 @@ type SidekiqStats struct {
 
 func getStats() (*SidekiqStats, error) {
 	log.Println("Getting stats")
-	username := os.Getenv("HTTP_USERNAME")
-	password := os.Getenv("HTTP_PASSWORD")
-	response, err := http.Get("https://" + username + ":" + password + "@api.dispatch.me/sidekiq/stats")
+	url := os.Getenv("SIDEKIQ_URL")
+	response, err := http.Get(url + "/sidekiq/stats")
 	if err != nil {
 		return nil, err
 	}
