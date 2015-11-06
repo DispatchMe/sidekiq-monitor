@@ -50,7 +50,7 @@ func getStats() (*SidekiqStats, error) {
 
 func main() {
 	pager.ServiceKey = os.Getenv("PAGERDUTY_KEY")
-
+	log.Println(pager.ServiceKey)
 	threshold := os.Getenv("THRESHOLD")
 	thresholdInt, err := strconv.ParseInt(threshold, 10, 64)
 	if err != nil {
@@ -64,7 +64,13 @@ func main() {
 		} else {
 			log.Printf("%d messages enqueued\n", stats.Sidekiq.Enqueued)
 			if stats.Sidekiq.Enqueued > int(thresholdInt) {
-				pager.Trigger("Sidekiq queue backed up")
+				log.Println("Triggering alert")
+				key, err := pager.Trigger("Sidekiq queue backed up")
+				if err != nil {
+					log.Println(err)
+				} else {
+					log.Println("Incident key: " + key)
+				}
 			}
 		}
 
